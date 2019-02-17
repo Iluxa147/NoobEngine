@@ -27,26 +27,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -69,20 +69,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>D:\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glfw-3.2.1\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\cpp\NoobEngine\Libraries\glfw-3.2.1\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Projects\cpp\NoobEngine\Libraries\glfw-3.2.1\include;D:\Projects\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glfw-3.2.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Projects\cpp\NoobEngine\Libraries\glfw-3.2.1\libs;D:\cpp\NoobEngine\Libraries\glfw-3.2.1\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>D:\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glfw-3.2.1\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\cpp\NoobEngine\Libraries\glfw-3.2.1\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Projects\cpp\NoobEngine\Libraries\glfw-3.2.1\include;D:\Projects\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glfw-3.2.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Projects\cpp\NoobEngine\Libraries\glfw-3.2.1\libs;D:\cpp\NoobEngine\Libraries\glfw-3.2.1\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>D:\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glfw-3.2.1\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\cpp\NoobEngine\Libraries\glfw-3.2.1\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Projects\cpp\NoobEngine\Libraries\glfw-3.2.1\include;D:\Projects\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glfw-3.2.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Projects\cpp\NoobEngine\Libraries\glfw-3.2.1\libs;D:\cpp\NoobEngine\Libraries\glfw-3.2.1\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>D:\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glfw-3.2.1\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\cpp\NoobEngine\Libraries\glfw-3.2.1\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Projects\cpp\NoobEngine\Libraries\glfw-3.2.1\include;D:\Projects\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glfw-3.2.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Projects\cpp\NoobEngine\Libraries\glfw-3.2.1\libs;D:\cpp\NoobEngine\Libraries\glfw-3.2.1\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
