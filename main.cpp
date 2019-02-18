@@ -16,11 +16,11 @@ const unsigned int SCR_HEIGHT = 600;
 int main(int argc, char **argv)
 {
 	//shaders initializer
-	ShaderManager vShader("vertexShader.glsl");
+	/*ShaderManager vShader("vertexShader.glsl");
 	const char *vertexShaderSource = vShader.getSrc();
 
 	ShaderManager fShader("fragmentShader.glsl");
-	const char *fragmentShaderSource = fShader.getSrc();
+	const char *fragmentShaderSource = fShader.getSrc();*/
 
 	// initialize and configure
 	glfwInit();
@@ -46,8 +46,10 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
+	ShaderManager shader("shader.glsl");
+
 	//vertexShader
-	unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	/*unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
 	glCompileShader(vertexShader);
 	//compile-time errors check
@@ -77,6 +79,7 @@ int main(int argc, char **argv)
 	glAttachShader(shaderProgram, vertexShader);
 	glAttachShader(shaderProgram, fragmentShader);
 	glLinkProgram(shaderProgram);
+	
 	//compile-time errors check
 	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
 	if (!success) {
@@ -85,15 +88,14 @@ int main(int argc, char **argv)
 	}
 
 	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
-
-
+	glDeleteShader(fragmentShader);*/
 
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	float vertices[] = {
-		-0.5f, -0.5f, 0.0f, // left  
-		0.5f, -0.5f, 0.0f, // right 
-		0.0f,  0.5f, 0.0f  // top   
+		// positions         // colors
+		0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // bottom right
+		-0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // bottom left
+		0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // top 
 	};
 
 	unsigned int VBO, VAO;
@@ -101,12 +103,15 @@ int main(int argc, char **argv)
 	glGenBuffers(1, &VBO);
 	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
 	glBindVertexArray(VAO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO); //VBO is linked to GL_ARRAY_BUFFER
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3*sizeof(float)));
+	glEnableVertexAttribArray(1);
+
 
 	// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -125,10 +130,18 @@ int main(int argc, char **argv)
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// draw our first triangle
-		glUseProgram(shaderProgram);
+		shader.use();
+		//glUseProgram(shaderProgram);
+
+		//set global params
+		/*float timeVal = glfwGetTime();
+		float redVal = (sin(timeVal) / 2.0f) + 0.5f;
+		int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
+		glUniform4f(vertexColorLocation, redVal, 0.0f, 0.0f, 1.0f);*/
+
+
 		glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
 		glDrawArrays(GL_TRIANGLES, 0, 3);
-
 		//swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		glfwSwapBuffers(window);
 		glfwPollEvents();
