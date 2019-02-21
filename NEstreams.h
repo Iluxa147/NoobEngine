@@ -19,6 +19,11 @@ public:
 		position_ += result;
 		return position_;
 	}
+	void seek(int offset)
+	{
+		std::fseek(file_, offset, SEEK_CUR);
+		position_ += offset;
+	}
 
 	const unsigned int getFileBytesize() const { return fileSize_; }
 

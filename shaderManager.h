@@ -2,10 +2,7 @@
 #ifndef H_SHADER
 #define H_SHADER
 
-#include "NEstreams.h"
-
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include "context.h"
 
 class ShaderManager
 {
@@ -58,11 +55,13 @@ public:
 		}
 
 	}
-		
 	~ShaderManager() { glDeleteProgram(ID_); };
 
-	void use() { glUseProgram(ID_); }
-
+	void use() const { glUseProgram(ID_); }
+	void setFloat(const char* name, float val) const
+	{
+		glUniform1f(glGetUniformLocation(ID_, name), val);
+	}
 	/*const char* getSrc()
 	{
 		unsigned int length = fstream_.getFileBytesize();
@@ -71,7 +70,6 @@ public:
 		src_[length] = '\0';
 		return src_;
 	}*/
-
 
 private:
 	GLuint ID_;

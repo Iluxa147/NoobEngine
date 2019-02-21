@@ -141,6 +141,9 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="context.h" />
+    <ClInclude Include="stb_image.h" />
+    <ClInclude Include="texture.h" />
     <None Include="fragmentShader.glsl">
       <FileType>CppHeader</FileType>
     </None>
