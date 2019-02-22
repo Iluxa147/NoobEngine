@@ -1,32 +1,39 @@
 #pragma once
 
 #ifdef VERTEX
-layout (location = 0) in vec3 aPos;
-layout (location = 1) in vec3 aColor;
-layout (location = 2) in vec2 aTexCoord;
+//layout (location = 1) in vec3 aColor;
+//uniform vec4 ourColor;
+//out vec3 ourColor;
 
-out vec3 ourColor;
+layout (location = 0) in vec3 aPos;
+layout (location = 1) in vec2 aTexCoord;
+
 out vec2 TexCoord;
 
+uniform mat4 transform;
+
+
+
 void main()
-{
-gl_Position = vec4(aPos, 1.0);
-ourColor = aColor;
-TexCoord = aTexCoord;
+{//ourColor = aColor;
+	gl_Position = transform*vec4(aPos, 1.0f);
+	TexCoord = vec2(aTexCoord.x, aTexCoord.y);
 }
 #endif //VERTEX
 
 
-#ifdef FRAGMENT
-out vec4 FragColor;
 
-in vec3 ourColor;
+#ifdef FRAGMENT
+//in vec3 ourColor;
+
+out vec4 FragColor;
 in vec2 TexCoord;
 
-uniform sampler2D ourTexture;
+uniform sampler2D texture1;
+uniform sampler2D texture2;
 
 void main()
 {
-	FragColor = texture(ourTexture, -TexCoord); //*vec4(ourColor, 1.0);
+	FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), 0.15);//*vec4(ourColor, 1.0);
 }
 #endif //FRAGMENT

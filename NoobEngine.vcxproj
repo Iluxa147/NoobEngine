@@ -69,19 +69,19 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>D:\Projects\cpp\NoobEngine\Libraries\glfw-3.2.1\include;D:\Projects\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glfw-3.2.1\include;$(IncludePath)</IncludePath>
+    <IncludePath>D:\cpp\NoobEngine\Libraries;D:\Projects\cpp\NoobEngine\Libraries\glfw-3.2.1\include;D:\Projects\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glfw-3.2.1\include;$(IncludePath)</IncludePath>
     <LibraryPath>D:\Projects\cpp\NoobEngine\Libraries\glfw-3.2.1\libs;D:\cpp\NoobEngine\Libraries\glfw-3.2.1\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>D:\Projects\cpp\NoobEngine\Libraries\glfw-3.2.1\include;D:\Projects\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glfw-3.2.1\include;$(IncludePath)</IncludePath>
+    <IncludePath>D:\cpp\NoobEngine\Libraries;D:\Projects\cpp\NoobEngine\Libraries\glfw-3.2.1\include;D:\Projects\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glfw-3.2.1\include;$(IncludePath)</IncludePath>
     <LibraryPath>D:\Projects\cpp\NoobEngine\Libraries\glfw-3.2.1\libs;D:\cpp\NoobEngine\Libraries\glfw-3.2.1\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>D:\Projects\cpp\NoobEngine\Libraries\glfw-3.2.1\include;D:\Projects\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glfw-3.2.1\include;$(IncludePath)</IncludePath>
+    <IncludePath>D:\cpp\NoobEngine\Libraries;D:\Projects\cpp\NoobEngine\Libraries\glfw-3.2.1\include;D:\Projects\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glfw-3.2.1\include;$(IncludePath)</IncludePath>
     <LibraryPath>D:\Projects\cpp\NoobEngine\Libraries\glfw-3.2.1\libs;D:\cpp\NoobEngine\Libraries\glfw-3.2.1\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>D:\Projects\cpp\NoobEngine\Libraries\glfw-3.2.1\include;D:\Projects\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glfw-3.2.1\include;$(IncludePath)</IncludePath>
+    <IncludePath>D:\cpp\NoobEngine\Libraries;D:\Projects\cpp\NoobEngine\Libraries\glfw-3.2.1\include;D:\Projects\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glad-3.3\include;D:\cpp\NoobEngine\Libraries\glfw-3.2.1\include;$(IncludePath)</IncludePath>
     <LibraryPath>D:\Projects\cpp\NoobEngine\Libraries\glfw-3.2.1\libs;D:\cpp\NoobEngine\Libraries\glfw-3.2.1\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -144,17 +144,11 @@
     <ClInclude Include="context.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="texture.h" />
-    <None Include="fragmentShader.glsl">
-      <FileType>CppHeader</FileType>
-    </None>
     <ClInclude Include="NEstreams.h" />
-    <ClInclude Include="shaderManager.h" />
+    <ClInclude Include="shader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shader.glsl" />
-    <None Include="vertexShader.glsl">
-      <FileType>Document</FileType>
-    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,9 +1,6 @@
 #include <iostream>
 
-//#include <glad/glad.h>
-//#include <GLFW/glfw3.h>
-
-#include "shaderManager.h"
+#include "shader.h"
 #include "texture.h"
 
 #include "vld.h" //Visual Leak Detector
@@ -16,12 +13,11 @@ const unsigned int SCR_HEIGHT = 600;
 
 int main(int argc, char **argv)
 {
-	//shaders initializer
-	/*ShaderManager vShader("vertexShader.glsl");
-	const char *vertexShaderSource = vShader.getSrc();
-
-	ShaderManager fShader("fragmentShader.glsl");
-	const char *fragmentShaderSource = fShader.getSrc();*/
+	/*glm::vec4 vec( 1.0f, 0.0f, 0.0f, 1.0f );
+	glm::mat4 transform(1.0f); // identity matrix
+	transform = glm::translate(transform, glm::vec3(1.0f, 1.0f, 0.0f));
+	vec = transform*vec;
+	std::cout << vec.x << vec.y << vec.z << vec.w<< std::endl;*/
 
 	// initialize and configure
 	glfwInit();
@@ -48,56 +44,16 @@ int main(int argc, char **argv)
 	}
 
 	ShaderManager shader("shader.glsl");
-	Texture texture("logo.jpg");
-	//vertexShader
-	/*unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-	glCompileShader(vertexShader);
-	//compile-time errors check
-	int  success;
-	char infoLog[512];
-	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-	if (!success)
-	{
-		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
-	}
-	
-	// fragment shader
-	int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-	glCompileShader(fragmentShader);
-	//compile-time errors check
-	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-	if (!success)
-	{
-		glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
-	}
-
-	// link shaders
-	int shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
-	
-	//compile-time errors check
-	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-	if (!success) {
-		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
-	}
-
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);*/
+	Texture texture1("Lenna.jpg");
+	Texture texture2("logo.jpg");
 
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	float vertices[] = {
-		// positions          // colors           // texture coords
-		0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   -1.0f, -1.0f, // top right
-		0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   -1.0f, 0.0f, // bottom right
-		-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, -1.0f  // top left 
+		 // positions         // texture coords
+		 0.4f,  0.8f, 0.0f,   1.0f, 1.0f, // top right
+		 0.4f, -0.8f, 0.0f,   1.0f, 0.0f, // bottom right
+		-0.4f, -0.8f, 0.0f,   0.0f, 0.0f, // bottom left
+		-0.4f,  0.8f, 0.0f,   0.0f, 1.0f  // top left
 	};
 	unsigned int indices[] = {
 		0, 1, 3, // first triangle
@@ -117,14 +73,14 @@ int main(int argc, char **argv)
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	// position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-	// color attribute
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
+	/*// color attribute
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);*/
 	// texture coord attribute
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 
 	// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
@@ -134,6 +90,11 @@ int main(int argc, char **argv)
 	// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
 	glBindVertexArray(0);
 
+	//set uniform parametres for textures
+	shader.use();
+	shader.setInt("texture1", 0);
+	shader.setInt("texture2", 1);
+
 	//render loop
 	while (!glfwWindowShouldClose(window))
 	{
@@ -142,11 +103,24 @@ int main(int argc, char **argv)
 		glClearColor(0.2f, 0.1f, 0.2f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		// bind Texture
-		texture.use();
+		// bind Textures
+		glActiveTexture(GL_TEXTURE0);
+		texture1.use();
+		glActiveTexture(GL_TEXTURE1);
+		texture2.use();
+
+		// create transformations
+
+		glm::mat4 transform(1.0f); // identity matrix
+		//transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
+		transform = glm::scale(transform, glm::vec3(0.9, 0.9, 0.9)*sin((float)glfwGetTime()));
+		transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
 
 		// render container
 		shader.use();
+		unsigned int transformLoc = glGetUniformLocation(shader.GetShaderID(), "transform");
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
+
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 

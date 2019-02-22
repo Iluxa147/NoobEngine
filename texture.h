@@ -37,9 +37,13 @@ public:
 
 	~Texture() {glDeleteTextures(1, &ID_);};
 	
-	void use() const { glBindTexture(GL_TEXTURE_2D, ID_);}
+	void use() const
+	{
+		glBindTexture(GL_TEXTURE_2D, ID_);
+	}
 
-
+	const GLuint GetTextureID() const { return ID_; };
+	
 private:
 	FStream fstream_; //TODO throw away stb_image.h
 	char* src_;
