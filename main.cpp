@@ -109,17 +109,32 @@ int main(int argc, char **argv)
 		glActiveTexture(GL_TEXTURE1);
 		texture2.use();
 
-		// create transformations
-
-		glm::mat4 transform(1.0f); // identity matrix
+		/// Activate shader
+		shader.use();
+		/// Create transformations
+		glm::mat4 model(1.0f);
+		glm::mat4 view(1.0f);
+		glm::mat4 projection(1.0f);
+		model = glm::rotate(model, sin((float)glfwGetTime())*1.5f, glm::vec3(0.5f, 0.5f, 0.5f));
+		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -2.0f));
+		projection = glm::perspective(45.0f, (GLfloat)SCR_WIDTH / (GLfloat)SCR_HEIGHT, 0.1f, 100.0f);
+		/// Get their uniform location
+		GLint modelLoc = glGetUniformLocation(shader.getShaderID(), "model");
+		GLint viewLoc = glGetUniformLocation(shader.getShaderID(), "view");
+		GLint projLoc = glGetUniformLocation(shader.getShaderID(), "projection");
+		/// Pass them to the shaders
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+		/// Note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
+		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+		/// create transformations
+		/*glm::mat4 transform(1.0f); // identity matrix
 		//transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
 		transform = glm::scale(transform, glm::vec3(0.9, 0.9, 0.9)*sin((float)glfwGetTime()));
-		transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+		transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));*/
 
-		// render container
-		shader.use();
-		unsigned int transformLoc = glGetUniformLocation(shader.GetShaderID(), "transform");
-		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
+		/*unsigned int transformLoc = glGetUniformLocation(shader.GetShaderID(), "transform");
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));*/
 
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

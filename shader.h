@@ -62,7 +62,7 @@ public:
 	{
 		glUniform1i(glGetUniformLocation(ID_, name), value);
 	}
-	const GLuint GetShaderID() const { return ID_; };
+	const GLuint getShaderID() const { return ID_; };
 	
 private:
 	GLuint ID_;
