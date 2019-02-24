@@ -1,12 +1,13 @@
 #include <iostream>
 #include <ctime>
 #include <string>
-#include <map>
+#include <unordered_map>
 
-//PushBack;		//O(n)=k+n/2=n (k - push back, n/2 - set pointer to random element)
-//SetRandPtr;	//O(n)=n/2=n
-//Serialize;	//O(n)=n(logn+logn) = 2nlogn (n - write n elements, logn - emplace to map, logn - find in map)
-//Deserialize;	//O(n)=n+n/2 = n^2 (n - add n elements, n/2 - set pointer to element with known index)
+//PushBack;			//O(n) = k			(k - doublelinked list push back)
+//SetRandPtr;		//O(n)=n/2 = n		(only half: from head or from tail)
+//PushBack rand;	//O(n)=k+n/2 = n	(k - push back, n/2 - set pointer to random element)
+//Serialize;		//O(n)=n(k+k) = n	(n - write n elements, k - emplace to hashtable, k - find in hashtable, no collisions)
+//Deserialize;		//O(n)=n(k+k+k) = n (n - add n elements, k - push back, k - emplace to hashtable, k - find in hashtable, no collisions)
 
 class ListNode
 {
@@ -31,19 +32,12 @@ public:
 		}
 	};
 
-	void pushBack(const std::string& val, unsigned int index = NULL)
+	void pushBack(const std::string& val, bool needRand = true, unsigned int index = NULL)
 	{
 		ListNode *tmp = new ListNode;
 		tmp->Next = nullptr;
 		tmp->Data = val;
 		++Count;
-
-		//set random index
-		std::srand(unsigned(std::time(0)));
-		if (index == NULL)
-		{
-			index = std::rand() % Count;
-		}
 
 		if (Head != nullptr)
 		{
@@ -56,11 +50,20 @@ public:
 			tmp->Prev = nullptr;
 			Head = Tail = tmp;
 		}
-		SetRandElementPtr(tmp, index);
+		
+		if (needRand) //set random index
+		{
+			std::srand(unsigned(std::time(0)));
+			if (index == NULL)
+			{
+				index = std::rand() % Count;
+			}
+			SetRandElementPtr(tmp, index);
+		}
 	};
 	void Serialize(std::FILE* s) const
 	{
-		std::map<ListNode*, unsigned int> addresses;
+		std::unordered_map<ListNode*, unsigned int> addresses;
 		unsigned int step = 0u;
 		unsigned int length = 0u;
 		std::fwrite(&Count, sizeof(unsigned int), 1, s);
@@ -69,16 +72,14 @@ public:
 			length = node->Data.size();
 			std::fwrite(&length, sizeof(unsigned int), 1, s);
 			std::fwrite(&node->Data[0], sizeof(char), length, s);
-
-			addresses.emplace(node, step); //fill map with current addresses
-			auto element = addresses.find(node->Rand); //find an index for pointer to random element
-
-			std::fwrite(&element->second, sizeof(unsigned int), 1, s); //write an index, on which node->Rand points to
+			addresses.emplace(node, step); //fill hashtable with current address and index
+			std::fwrite(&addresses.find(node->Rand)->second, sizeof(unsigned int), 1, s); //write an index, which node->Rand points to
 			++step;
 		}
 	}
 	void Deserialize(std::FILE* s)
 	{
+		std::unordered_map<unsigned int, ListNode*> addresses;
 		unsigned int index = 0u;
 		unsigned int length = 0u;
 		unsigned int count = 0u;
@@ -90,7 +91,10 @@ public:
 			data.resize(length);
 			std::fread(&data[0], sizeof(char), length, s);
 			std::fread(&index, sizeof(unsigned int), 1, s);
-			pushBack(data, index);
+			
+			pushBack(data, false);
+			addresses.emplace(i, this->Tail);
+			this->Tail->Rand = addresses.find(index)->second;
 		}
 	}
 
@@ -129,7 +133,7 @@ public:
 int main(int argc, char** argv)
 {
 	ListRand serLst;
-	for (size_t i = 0; i < 100; ++i)
+	for (size_t i = 0; i < 10000; ++i)
 	{
 		std::string data = std::to_string(i);
 		serLst.pushBack(data);
